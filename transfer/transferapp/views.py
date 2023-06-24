@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 # Create your views here.
 
+#主頁
 def homepage(request):
     return render(request, 'transferapp/homepage.html')
 
@@ -21,6 +22,7 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'transferapp/login.html', {'form': form})
 
+#登入
 @login_required
 def serve(request):
     user = request.user
@@ -34,18 +36,23 @@ def serve(request):
     else:
         return render(request, 'transferapp/serve.html')
 
+#學生主頁
 def student_serve(request):
     return render(request, 'transferapp/student_serve.html')
 
+#老師/社長主頁
 def teacher_serve(request):
     return render(request, 'transferapp/teacher_serve.html')
 
+#學務處主頁
 def school_admin_serve(request):
     return render(request, 'transferapp/school_admin_serve.html')
 
+#錯誤介面
 def error_2 (request):
     return render(request, 'transferapp/error_2.html')
 
+#轉社單
 def transfer_form(request):
     current_time = timezone.now()
     settings = TransferFormSettings.objects.first()
@@ -79,9 +86,11 @@ def transfer_form(request):
     return render(request, 'transferapp/transfer_form.html', {'form': form, 'clubs': clubs})
 
 
+#已填過轉社單
 def already_filled(request):
     return render(request, 'transferapp/already_filled.html')
 
+#審核轉社單主頁
 @login_required
 def check_transfer_form_approval(request):
     user = request.user
@@ -150,10 +159,12 @@ def check_transfer_form_approval(request):
 
     return render(request, 'transferapp/check_transfer_form_approval.html', {'transfer_forms': transfer_forms, 'user': user})
 
+#查看轉社單進度
 def check_transfer_form_progress(request):
     transfers = Transfer.objects.all()
     return render(request, 'transferapp/check_transfer_form_progress.html', {'transfers': transfers})
 
+#最終審核
 def final_check(request):
     approved_forms = Transfer.objects.filter(
         original_club_teacher_approved=True,
@@ -164,6 +175,7 @@ def final_check(request):
     
     return render(request, 'transferapp/final_check.html', {'approved_forms': approved_forms})
 
+#錯誤頁面
 def error_page(request):
     return render(request, 'transferapp/error_page.html')
 
