@@ -1,0 +1,39 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/transfer_form.css' %}">
+</head>
+<body>
+  {% if has_submitted_form %}
+    <h1>已提交轉社申請單</h1>
+  {% else %}
+    <form method="POST" action="{% url 'transfer_form' %}">
+        {% csrf_token %}
+        <label for="class_name">班級:</label>
+        <input type="text" id="class_name" name="class_name" required><br><br>
+
+        <label for="seat_number">座號:</label>
+        <input type="text" id="seat_number" name="seat_number" required><br><br>
+
+        <label for="student_name">姓名:</label>
+        <input type="text" id="student_name" name="student_name" required><br><br>
+            
+        <label for="original_club">原社團:</label>
+        <select id="original_club" name="original_club">
+        {% for club in clubs %}
+        <option value="{{ club.id }}">{{ club.name }}</option>
+        {% endfor %}
+        </select><br><br>
+
+        <label for="desired_club">欲轉往:</label>
+        <select id="desired_club" name="desired_club">
+        {% for club in clubs %} 
+        <option value="{{ club.id }}">{{ club.name }}</option>
+        {% endfor %}
+        </select><br><br>
+        
+        <input type="submit" value="提交">
+    </form>
+  {% endif %}
+</body>
+</html>

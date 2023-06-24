@@ -1,0 +1,102 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/check_transfer_form_approval.css' %}">
+</head>
+<style>
+    .disabled-button {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+  <html>
+  <head>
+    <title>轉社單審核</title>
+  </head>
+  <body>
+    <h2>轉社單審核</h2>
+    
+    {% if transfer_forms %}
+    <table>
+      <thead>
+        <tr>
+          <th>班級</th>
+          <th>座號</th>
+          <th>姓名</th>
+          <th>原社團</th>
+          <th>欲轉往社團</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transfer_form in transfer_forms %}
+        <tr>
+          <td>{{ transfer_form.class_name }}</td>
+          <td>{{ transfer_form.seat_number }}</td>
+          <td>{{ transfer_form.student_name }}</td>
+          <td>{{ transfer_form.original_club }}</td>
+          <td>{{ transfer_form.desired_club }}</td>
+          <td>
+            <form method="POST" action="{% url 'check_transfer_form_approval' %}">
+              {% csrf_token %}
+              <input type="hidden" name="form_id" value="{{ transfer_form.id }}">
+              {% if transfer_form.is_approved %}
+                <button type="button" class="btn btn-primary disabled-button">已審核</button>
+              {% else %}
+                {% if user == transfer_form.original_club.president and transfer_form.original_club_president_approved is None %}
+                  <button type="submit" class="btn btn-primary" name="action" value="approve">批准</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="reject">拒絕</button>
+                {% elif user == transfer_form.original_club.teacher and transfer_form.original_club_teacher_approved is None %}
+                  <button type="submit" class="btn btn-primary" name="action" value="approve">批准</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="reject">拒絕</button>
+                {% elif user == transfer_form.desired_club.president and transfer_form.desired_club_president_approved is None %}
+                  <button type="submit" class="btn btn-primary" name="action" value="approve">批准</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="reject">拒絕</button>
+                {% elif user == transfer_form.desired_club.teacher and transfer_form.desired_club_teacher_approved is None %}
+                  <button type="submit" class="btn btn-primary" name="action" value="approve">批准</button>
+                  <button type="submit" class="btn btn-primary" name="action" value="reject">拒絕</button>
+                {% else %}
+                  <button type="button" class="btn btn-primary disabled-button">已審核</button>
+                {% endif %}
+              {% endif %}
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="6">
+            <form method="GET" action="/serve/">
+              <button type="submit" class="btn btn-primary">返回</button>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    {% else %}
+    <style>
+      .center-text {
+        text-align: center;
+        font-size: 20px;
+      }
+    </style>
+    
+    <div class="center-text">
+      <p>目前還沒有申請單需要批准</p>
+    </div>
+    <style>
+      .center {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+      }
+  </style>
+  
+  <div class="center">
+      <form method="GET" action="/serve/">
+          <button type="submit" class="btn btn-primary">返回</button>
+      </form>
+  </div>
+    {% endif %}
+  </body>
+  </html>
+  

@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/already_filled.css' %}">
+</head>
+<html>
+<head>
+    <title>已填寫轉社單</title>
+</head>
+<body>
+    <h1>已填寫轉社單</h1>
+    <p>您已經填寫了轉社單，無法再次填寫。</p>
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <form method="GET" action="/serve/">
+        <button type="submit">返回</button>
+    </form>
+</body>
+</html>

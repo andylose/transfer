@@ -1,0 +1,43 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/serve.css' %}">
+</head>
+<head>
+  <title>服務頁面</title>
+</head>
+<body>
+  <h1>轉社系統</h1>
+  <ul>
+    <li><a href="{% url 'transfer_form' %}">填寫轉社單</a>（只有學生可填寫）</li>
+    <li><a href="{% url 'check_transfer_form_progress' %}">檢查轉社單進度</a>（只有學生可見）</li>
+    <li><a href="{% url 'check_transfer_form_approval' %}">審核轉社單</a>（只有社團老師和社長可見）</li>
+    <li><a href="{% url 'final_check' %}">最終審核</a>（只有學務處老師可見）</li>
+    <li><a href="/admin/transferapp/student/">變更學生</a>（只有學務處老師可見）</li>
+    <li><a href="/admin/transferapp/transfer/">刪除/檢視轉社單</a>（只有學務處老師可見）</li>
+    <li><a href="/admin/transferapp/club/">變更社團社長/老師</a>（只有學務處老師可見）</li>
+    <li><a href="/admin/transferapp/transferformsettings/">設定轉社單開放填寫時間</a>（只有學務處老師可見）</li>
+  </ul>
+  <style>
+    .center {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<style>
+  .center-text {
+      text-align: center;
+  }
+</style>
+
+<div class="center-text">
+  <h3>目前登入的使用者：{{ request.user.username }}</h3>
+</div>
+<div class="center">
+    <form action="{% url 'logout' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">登出</button>
+    </form>
+</div>
+</body>
+</html>

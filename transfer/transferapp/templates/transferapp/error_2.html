@@ -1,0 +1,26 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/error_2.css' %}">
+</head>
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>身分無效</h1>
+    <p>只有學生可以填寫轉社單</p>
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+    
+    <div class="center">
+        <form method="GET" action="/serve/">
+            <button type="submit" class="btn btn-primary">返回</button>
+        </form>
+    </div>
+</body>
+</html>

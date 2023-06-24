@@ -1,0 +1,39 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<head>
+    <title>登入</title>
+</head>
+<body>
+    <div class="container">
+        <h2>登入</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">登入</button>
+        </form>
+    </div>
+</body>
+</html>

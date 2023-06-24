@@ -1,0 +1,61 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/final_check.css' %}">
+</head>
+<head>
+  <title>最終審核</title>
+</head>
+<body>
+  <h2>最終審核</h2>
+
+  {% if approved_forms %}
+    <table>
+      <thead>
+        <tr>
+          <th>班級</th>
+          <th>座號</th>
+          <th>姓名</th>
+          <th>原社團</th>
+          <th>欲轉往社團</th>
+          <th>原社團老師批准時間</th>
+          <th>原社團社長批准時間</th>
+          <th>欲轉往社團老師批准時間</th>
+          <th>欲轉往社團社長批准時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transfer_form in approved_forms %}
+        <tr>
+          <td>{{ transfer_form.class_name }}</td>
+          <td>{{ transfer_form.seat_number }}</td>
+          <td>{{ transfer_form.student_name }}</td>
+          <td>{{ transfer_form.original_club.name }}</td>
+          <td>{{ transfer_form.desired_club.name }}</td>
+          <td>{{ transfer_form.original_club_teacher_approved_time }}</td>
+          <td>{{ transfer_form.original_club_president_approved_time }}</td>
+          <td>{{ transfer_form.desired_club_teacher_approved_time }}</td>
+          <td>{{ transfer_form.desired_club_president_approved_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>暫無已審核皆通過的轉社申請單。</p>
+  {% endif %}
+  <style>
+    .center {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+
+<div class="center">
+  <form method="GET" action="/serve/">
+        {% csrf_token %}
+        <button type="submit">返回</button>
+        <button onclick="location.href='/admin/transferapp/student/'">變更學生社團</button>
+    </form>
+</div>
+</body>
+</html>

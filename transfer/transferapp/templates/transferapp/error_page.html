@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/erroe_page.css' %}">
+</head>
+<head>
+    <title>轉社填寫尚未開放</title>
+</head>
+<body>
+    <h1>目前不是填寫轉社單的規定時間</h1>
+    <p>請注意開放時間，在規定的時間內再來填寫</p>
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <form method="GET" action="/serve/">
+        <button type="submit">返回</button>
+    </form>
+</body>
+</html>

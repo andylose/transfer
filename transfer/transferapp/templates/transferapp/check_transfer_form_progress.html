@@ -1,0 +1,113 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/check_transfer_form_progress.css' %}">
+</head>
+<head>
+    <title>檢查轉社單進度</title>
+</head>
+<body>
+    <h1>檢查轉社單進度</h1>
+    {% if transfers %}
+    <table>
+        <thead>
+            <tr>
+                <th>轉社單編號</th>
+                <th>班級</th>
+                <th>座號</th>
+                <th>姓名</th>
+                <th>原社團</th>
+                <th>欲轉往社團</th>
+                <th>提交日期</th>
+                <th>原社團老師審核</th>
+                <th>原社團社長審核</th>
+                <th>欲轉往社團老師審核</th>
+                <th>欲轉往社團社長審核</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transfer in transfers %}
+            <tr>
+                <td>{{ transfer.id }}</td>
+                <td>{{ transfer.class_name }}</td>
+                <td>{{ transfer.seat_number }}</td>
+                <td>{{ transfer.student_name }}</td>
+                <td>{{ transfer.original_club.name }}</td>
+                <td>{{ transfer.desired_club.name }}</td>
+                <td>{{ transfer.submission_date }}</td>
+                <td>
+                    {% if transfer.original_club_teacher_approved is not None %}
+                        {% if transfer.original_club_teacher_approved %}
+                            已通過
+                        {% else %}
+                            遭駁回
+                        {% endif %}
+                        {% if transfer.original_club_teacher_approved_time %}
+                            <br>{{ transfer.original_club_teacher_approved_time }}
+                        {% endif %}
+                    {% else %}
+                        待審核
+                    {% endif %}
+                </td>
+                <td>
+                    {% if transfer.original_club_president_approved is not None %}
+                        {% if transfer.original_club_president_approved %}
+                            已通過
+                        {% else %}
+                            遭駁回
+                        {% endif %}
+                        {% if transfer.original_club_president_approved_time %}
+                            <br>{{ transfer.original_club_president_approved_time }}
+                        {% endif %}
+                    {% else %}
+                        待審核
+                    {% endif %}
+                </td>
+                <td>
+                    {% if transfer.desired_club_teacher_approved is not None %}
+                        {% if transfer.desired_club_teacher_approved %}
+                            已通過
+                        {% else %}
+                            遭駁回
+                        {% endif %}
+                        {% if transfer.desired_club_teacher_approved_time %}
+                            <br>{{ transfer.desired_club_teacher_approved_time }}
+                        {% endif %}
+                    {% else %}
+                        待審核
+                    {% endif %}
+                </td>
+                <td>
+                    {% if transfer.desired_club_president_approved is not None %}
+                        {% if transfer.desired_club_president_approved %}
+                            已通過
+                        {% else %}
+                            遭駁回
+                        {% endif %}
+                        {% if transfer.desired_club_president_approved_time %}
+                            <br>{{ transfer.desired_club_president_approved_time }}
+                        {% endif %}
+                    {% else %}
+                        待審核
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>目前還沒有提交申請單。</p>
+    {% endif %}
+    <style>
+        .center {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <div class="center">
+        <form method="GET" action="/serve/">
+            <button type="submit">返回</button>
+        </form>
+    </div>
+</body>
+</html>
