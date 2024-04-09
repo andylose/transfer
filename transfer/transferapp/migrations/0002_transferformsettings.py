@@ -14,8 +14,8 @@ class Migration(migrations.Migration):
             name='TransferFormSettings',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start_time', models.DateTimeField(verbose_name='填写开始时间')),
-                ('end_time', models.DateTimeField(verbose_name='填写结束时间')),
+                ('start_time', models.DateTimeField(verbose_name='填寫開始時間')),
+                ('end_time', models.DateTimeField(verbose_name='填寫結束時間')),
             ],
         ),
     ]
