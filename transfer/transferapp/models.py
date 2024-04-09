@@ -25,7 +25,7 @@ class SchoolAdmin(models.Model):
     admin = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.use.username
+        return self.user.username
     
 class Transfer(models.Model):
     class_name = models.CharField(max_length=50)
